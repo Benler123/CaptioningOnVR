@@ -69,7 +69,6 @@ crashlytics-build.properties
 
 # Temporary auto-generated Android Assets
 /Assets/StreamingAssets/
-/Assets/StreamingAssets/Videos/
 
 *.DS_Store
 /Assets/Resources/*
