@@ -7,19 +7,23 @@ public class PreserveScale : MonoBehaviour {
 	Vector3 originalScale;
 
 	public float offset = 0.2f;
+	void Awake() 
+	{
+		originalScale = transform.localScale;
+	}
    IEnumerator Start()
     {
         // Wait until the next frame
         yield return null;
 
         // Now the parent's Start method should have been called
-        originalScale = transform.localScale;
 
         AdjustScale();
     }
 
 	 void AdjustScale()
     {
+		Debug.Log(originalScale);
         if (transform.parent != null)
         {
             transform.localScale = new Vector3(

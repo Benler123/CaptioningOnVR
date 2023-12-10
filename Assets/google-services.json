@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "396395663961",
+    "firebase_url": "https://captioningonvr-default-rtdb.firebaseio.com",
+    "project_id": "captioningonvr",
+    "storage_bucket": "captioningonvr.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:396395663961:android:484eea938676930c749748",
+        "android_client_info": {
+          "package_name": "com.UnityTechnologies.com.unity.template.urpblank"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvXHUM8WrRUUsdEhuzhriz2uK0AuF9448"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

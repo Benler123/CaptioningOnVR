@@ -50,16 +50,21 @@ public class CaptionBackground : MonoBehaviour
     void HandleArrows() {
         Vector3 pointOnSphere = projectOntoSphere(currentJuror);
         if(transform.position.x + buffer > pointOnSphere.x && transform.position.x - buffer < pointOnSphere.x) {
-             transform.GetChild(1).gameObject.SetActive(false);
-            transform.GetChild(2).gameObject.SetActive(false);
+            //    myGameObject.GetComponent<MeshRenderer>().enabled = false;
+
+            //  transform.GetChild(1).gameObject.SetActive(false);
+            // transform.GetChild(2).gameObject.SetActive(false);
+
+            transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().enabled = false;;
+            transform.GetChild(2).gameObject.GetComponent<MeshRenderer>().enabled = false;;
         }
         else if (transform.position.x -pointOnSphere.x > 0){
-            transform.GetChild(1).gameObject.SetActive(false);
-            transform.GetChild(2).gameObject.SetActive(true);
+            transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().enabled = false;
+            transform.GetChild(2).gameObject.GetComponent<MeshRenderer>().enabled = true;
 
         } else{
-            transform.GetChild(1).gameObject.SetActive(true);
-            transform.GetChild(2).gameObject.SetActive(false);
+            transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().enabled = true;
+            transform.GetChild(2).gameObject.GetComponent<MeshRenderer>().enabled = false;
         }
     }
     void setCurrentJuror() {
