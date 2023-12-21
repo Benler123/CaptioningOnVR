@@ -2,15 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SetOverflowSize : MonoBehaviour
+public class GameController : MonoBehaviour
 {
     // Start is called before the first frame update
-    public Parameters Params;
-
     void Start()
     {
-        RectTransform rectTransform = GetComponent<RectTransform>();
-        rectTransform.sizeDelta = new Vector2(Params.getWidth(5), rectTransform.sizeDelta.y);
+           
     }
 
     // Update is called once per frame

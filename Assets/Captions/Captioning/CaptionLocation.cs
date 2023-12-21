@@ -12,9 +12,9 @@ public class CaptionLocation : MonoBehaviour
     void Start()
     {
         RectTransform rectTransform = GetComponent<RectTransform>();
-        rectTransform.sizeDelta = new Vector2(Params.getWidth(), rectTransform.sizeDelta.y);
         mainCamera = Camera.main;
         dist = transform.position.z - .0001f;
+        rectTransform.sizeDelta = new Vector2(Params.getWidth(dist), rectTransform.sizeDelta.y);
     }  
 
     // Update is called once per frame

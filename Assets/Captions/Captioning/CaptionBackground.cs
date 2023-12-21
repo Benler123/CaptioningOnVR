@@ -20,9 +20,10 @@ public class CaptionBackground : MonoBehaviour
     float dist;
     void Start()
     {
-        transform.localScale = new Vector3(Params.getWidth(), transform.localScale.y, transform.localScale.z);
         mainCamera = Camera.main;
         dist = transform.position.z;
+        transform.localScale = new Vector3(Params.getWidth(dist), transform.localScale.y, transform.localScale.z);
+
     }  
 
     // Update is called once per frame
