@@ -71,5 +71,4 @@ crashlytics-build.properties
 /Assets/StreamingAssets/
 
 **/.DS_Store
-/Assets/Resources/*
 mono_crash*
