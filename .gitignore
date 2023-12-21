@@ -70,6 +70,6 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /Assets/StreamingAssets/
 
-*.DS_Store
-/Assets/.DS_Store
+**/.DS_Store
 /Assets/Resources/*
+mono_crash*
