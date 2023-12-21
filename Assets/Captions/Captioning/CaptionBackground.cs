@@ -82,9 +82,9 @@ public class CaptionBackground : MonoBehaviour
         }
     }
     
-    Vector3 projectOntoSphere(Transform point, int radius=5){
+    Vector3 projectOntoSphere(Transform point){
         float magnitude = currentJuror.transform.position.magnitude;
-        float scalar = radius/magnitude;
+        float scalar = dist/magnitude;
         return new Vector3(
             scalar * currentJuror.transform.position.x,
             scalar * currentJuror.transform.position.y,

@@ -32,7 +32,7 @@ public class PreserveScale : MonoBehaviour {
                 originalScale.z 
             );
 			transform.position =  new Vector3(
-                transform.position.x + transform.parent.localScale.x * offset,
+                transform.parent.position.x + (transform.parent.localScale.x/2 + originalScale.x) * offset,
                 transform.position.y,
                 transform.position.z 
             );
