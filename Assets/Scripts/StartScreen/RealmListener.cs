@@ -6,12 +6,11 @@ using System.Linq;
 using Realms;
 using UnityEngine.SceneManagement;
 
-public class ScriptForTest : MonoBehaviour
+public class RealmListener : MonoBehaviour
 {
     private TextMeshPro textMeshPro;
     int initialCount;
     public Parameters parameters;
-    // Start is called before the first frame update
     void Start()
     {   
         textMeshPro = GetComponent<TextMeshPro>();
@@ -23,20 +22,15 @@ public class ScriptForTest : MonoBehaviour
     {
         IQueryable<ParametersDataObject> parametersDataObjects = RealmController.Instance.GetParametersDataObjects();
         if (parametersDataObjects == null){
-            // Debug.Log("parametersDataObjects is null");
+            Debug.Log("parametersDataObjects is null");
             return;
         }
-        Debug.Log("COUNT " + parametersDataObjects.Count());
-        initialCount = parametersDataObjects.Count();
-        long sum = 0; 
-        foreach (ParametersDataObject parametersDataObject in parametersDataObjects)
-        {
-            Debug.Log(parametersDataObject.FOV);
-            sum += parametersDataObject.FOV;
+        if(initialCount == 0) {
+            initialCount = parametersDataObjects.Count();
         }
-        textMeshPro.text = sum.ToString();
 
         if (parametersDataObjects.Count() > initialCount){
+            textMeshPro.text = "LOADING";
             setParams(parametersDataObjects);
             SwitchScene();
         }
@@ -49,6 +43,6 @@ public class ScriptForTest : MonoBehaviour
 
     public void SwitchScene()
     {
-        SceneManager.LoadScene("CaptioningScene");
+        GameManager.Instance.SetState(GameManager.GameStates.Captioning);
     }
 }

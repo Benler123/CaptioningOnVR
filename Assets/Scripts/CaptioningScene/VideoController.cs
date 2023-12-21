@@ -19,7 +19,19 @@ public class VideoController : MonoBehaviour
 
         videoPlayer.url = url;
         StartCoroutine(PrepareAndPlay());
+
+        videoPlayer.loopPointReached += CheckOver;
+
+         StartCoroutine(PauseOnLoad());
     }
+
+    IEnumerator PauseOnLoad()
+    {
+        Time.timeScale = 0;  // This pauses the scene
+        yield return new WaitForSecondsRealtime(2);  // This waits for 2 seconds
+        Time.timeScale = 1;  // This resumes the scene
+    }
+
 
     IEnumerator PrepareAndPlay()
     {
@@ -31,5 +43,11 @@ public class VideoController : MonoBehaviour
         }
 
         videoPlayer.Play();
+    }
+
+    void CheckOver(VideoPlayer vp)
+    {
+        GameManager.Instance.SetState(GameManager.GameStates.PreScene);
+        Debug.Log("Video is over");
     }
 }

@@ -8,7 +8,7 @@ public class Parameters : ScriptableObject
     public long fov = 10;
     public long video = 1;
     
-    private string currentJuror;
+    private string currentJuror = "juror-a";
     public float getWidth(float dist) {
         // This is assuming the camera is 5 away from the captions
         return Mathf.Tan(fov/2 * 0.0174533f) * dist * 2;
