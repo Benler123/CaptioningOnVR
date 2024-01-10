@@ -15,80 +15,90 @@ public class CaptionBackground : MonoBehaviour
     public Transform juror4;
 
     private Transform currentJuror;
+
+    private GameObject leftArrow;
+    private GameObject rightArrow;
     public Parameters Params;
     Camera mainCamera;
     float dist;
     void Start()
     {
+        Params.setJurorPositions(juror1, juror2, juror3, juror4);
         mainCamera = Camera.main;
         dist = transform.position.z;
         transform.localScale = new Vector3(Params.getWidth(dist), transform.localScale.y, transform.localScale.z);
+        leftArrow = transform.GetChild(1).gameObject;
+        rightArrow = transform.GetChild(1).gameObject;
 
     }  
 
     // Update is called once per frame
     void Update(){
-        // float angle = 0.0f;
-        // Vector3 axis = Vector3.zero;
-        // mainCamera.transform.rotation.ToAngleAxis(out angle, out axis);
-        // Debug.Log(angle);
-        // Debug.Log(axis);
-        // transform.position = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width/2, Screen.height/2, angle * axis.x + angle * axis.y));
+        currentJuror = Params.ReturnCurrentJurorTransform();
+        switch (Params.captioningMethod) {
+            case 1:
+                transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().enabled = true;
+                transform.GetChild(2).gameObject.GetComponent<MeshRenderer>().enabled = true;
+                HandleNonRegCaptions();
+                HandleArrows();
+                break;
+            case 2:
+                HandleNonRegCaptions();
+                break;
+            case 3:
+                HandleRegCaptions();
+                break;
+            case 4:
+                HandleRegCaptions();
+                break;
+        }
+
+
+    }
+
+
+    void HandleNonRegCaptions() {
         Vector3 forwardFromCamera = mainCamera.transform.forward;
         Vector3 newPosition = mainCamera.transform.position + forwardFromCamera * dist;
             
             // Set the object's position
         transform.position = newPosition;
             
-            // Optionally, make the object look at the camera or away from the camera
-            // Remove or comment out the line below if you don't want the object to change its rotation
+        //  make the object look at the camera
         transform.rotation = Quaternion.LookRotation(forwardFromCamera);
+    }
 
-        setCurrentJuror();
-        HandleArrows();
+    void HandleRegCaptions() {
+        Vector3 forwardFromCamera = mainCamera.transform.forward;
+        Vector3 pointOnSphere = Params.projectOntoSphere(dist, currentJuror);
+        
+        Vector3 newPosition = pointOnSphere;
+            
+            // Set the object's position
+        transform.position = newPosition;
+            
+        //  make the object look at the camera
+        transform.rotation = Quaternion.LookRotation(forwardFromCamera);
     }
 
     void HandleArrows() {
-        Vector3 pointOnSphere = projectOntoSphere(currentJuror);
+        Vector3 pointOnSphere = Params.projectOntoSphere(dist, currentJuror);
         if(transform.position.x + buffer > pointOnSphere.x && transform.position.x - buffer < pointOnSphere.x) {
             //    myGameObject.GetComponent<MeshRenderer>().enabled = false;
 
             //  transform.GetChild(1).gameObject.SetActive(false);
             // transform.GetChild(2).gameObject.SetActive(false);
 
-            transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().enabled = false;;
-            transform.GetChild(2).gameObject.GetComponent<MeshRenderer>().enabled = false;;
+            leftArrow.GetComponent<MeshRenderer>().enabled = false;
+            rightArrow.GetComponent<MeshRenderer>().enabled = false;
         }
         else if (transform.position.x -pointOnSphere.x > 0){
-            transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().enabled = false;
-            transform.GetChild(2).gameObject.GetComponent<MeshRenderer>().enabled = true;
+            leftArrow.GetComponent<MeshRenderer>().enabled = false;
+            rightArrow.GetComponent<MeshRenderer>().enabled = true;
 
         } else{
-            transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().enabled = true;
-            transform.GetChild(2).gameObject.GetComponent<MeshRenderer>().enabled = false;
+            leftArrow.GetComponent<MeshRenderer>().enabled = true;
+            rightArrow.GetComponent<MeshRenderer>().enabled = false;
         }
-    }
-    void setCurrentJuror() {
-        if(Params.getCurrentJuror() == "juror-a") {
-            currentJuror = juror3;
-        } else if (Params.getCurrentJuror() == "juror-b"){
-            currentJuror = juror2;
-        } else if(Params.getCurrentJuror() == "juror-c") {
-            currentJuror = juror1;
-        } else if(Params.getCurrentJuror() == "jury-foreman") {
-            currentJuror = juror4;
-        } else {
-            throw new InvalidDataException("Not a valid juror");
-        }
-    }
-    
-    Vector3 projectOntoSphere(Transform point){
-        float magnitude = currentJuror.transform.position.magnitude;
-        float scalar = dist/magnitude;
-        return new Vector3(
-            scalar * currentJuror.transform.position.x,
-            scalar * currentJuror.transform.position.y,
-            scalar * currentJuror.transform.position.z
-        );
     }
 }
