@@ -39,6 +39,8 @@ public class RealmListener : MonoBehaviour
     public void setParams(IQueryable<ParametersDataObject> parametersDataObjects) {
         parameters.fov = parametersDataObjects.Last().FOV;
         parameters.video = parametersDataObjects.Last().Video;
+        parameters.offset = parametersDataObjects.Last().Offset;
+        parameters.captioningMethod = parametersDataObjects.Last().CaptioningMethod;
     }
 
     public void SwitchScene()

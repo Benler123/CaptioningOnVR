@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-
+using System;
 
 
 [CreateAssetMenu(menuName="Params")]
@@ -69,6 +69,41 @@ public class Parameters : ScriptableObject
             scalar * p.x,
             scalar * p.y + 1.1899f,
             scalar * p.z
+        );
+    }
+    public static (double r, double theta, double phi) CartesianToSpherical(double x, double y, double z)
+    {
+        double r = Math.Sqrt(x * x + y * y + z * z);
+        double theta = Math.Acos(z / r);  // polar angle
+        double phi = Math.Atan2(y, x);    // azimuthal angle
+        return (r, theta, phi);
+    }
+
+    // Function to convert Spherical coordinates to Cartesian coordinates
+    public static (double x, double y, double z) SphericalToCartesian(double r, double theta, double phi)
+    {
+        double x = r * Math.Sin(theta) * Math.Cos(phi);
+        double y = r * Math.Sin(theta) * Math.Sin(phi);
+        double z = r * Math.Cos(theta);
+        return (x, y, z);
+    }
+
+    public static Vector3 convertOffset(double x1, double y1, double z1) {
+        // Radius of the sphere
+        double r = Math.Sqrt(x1 * x1 + y1 * y1 + z1 * z1);
+
+        // Convert point P to spherical coordinates
+        (double rSphere, double theta, double phi) = Parameters.CartesianToSpherical(x1, y1, z1);
+
+        // Moving 10 degrees to the right: Add 10 degrees to the azimuthal angle
+        double phiPrime = phi + (10 * Math.PI / 180);
+
+        // Convert back to Cartesian coordinates
+        (double x2, double y2, double z2) = Parameters.SphericalToCartesian(rSphere, theta, phiPrime);
+
+        Debug.Log($"New coordinates: ({x2}, {y2}, {z2})");
+        return new Vector3(
+            (float)x2, (float)y2, (float)z2
         );
     }
 }

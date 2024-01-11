@@ -13,6 +13,9 @@ public partial class ParametersDataObject : IRealmObject
 
     public long Video { get; set; }
 
+    public long Offset { get; set; }
+    public long CaptioningMethod { get; set; }
+
     public ParametersDataObject()
     {
         this.Id = ObjectId.GenerateNewId();

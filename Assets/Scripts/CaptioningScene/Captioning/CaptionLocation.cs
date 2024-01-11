@@ -44,7 +44,6 @@ public class CaptionLocation : MonoBehaviour
     void HandleRegCaptions() {
         Vector3 forwardFromCamera = mainCamera.transform.forward;
         Vector3 pointOnSphere = Params.projectOntoSphere(dist, Params.ReturnCurrentJurorTransform());
-        Debug.Log("CAP " + pointOnSphere);
         Vector3 newPosition = pointOnSphere;
             
             // Set the object's position
