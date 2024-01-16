@@ -8,9 +8,10 @@ public class CaptionLocation : MonoBehaviour
 {
     // Start is called before the first frame update
     public Parameters Params;
-    public float offset = 0f;
+    public bool update;
     Camera mainCamera;
     float dist;
+    
     void Start()
     {
         RectTransform rectTransform = GetComponent<RectTransform>();
@@ -21,7 +22,9 @@ public class CaptionLocation : MonoBehaviour
 
     // Update is called once per frame
     void Update(){
-        UpdatePosition();
+        if(update){
+            UpdatePosition();
+        }
     }
 
     void UpdatePosition() {

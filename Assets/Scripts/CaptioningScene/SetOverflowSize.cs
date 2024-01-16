@@ -10,7 +10,9 @@ public class SetOverflowSize : MonoBehaviour
     void Start()
     {
         RectTransform rectTransform = GetComponent<RectTransform>();
-        rectTransform.sizeDelta = new Vector2(Params.getWidth(5), rectTransform.sizeDelta.y);
+        Camera mainCamera = Camera.main;
+        float dist = transform.position.z - .0001f;
+        rectTransform.sizeDelta = new Vector2(Params.getWidth(dist), rectTransform.sizeDelta.y);
     }
 
     // Update is called once per frame

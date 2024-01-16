@@ -41,31 +41,25 @@ public class RealmController : MonoBehaviour
                     }
                 });
             } else {
+                Debug.Log("ALREADY LOGGED");
                 realmUser = realmApp.CurrentUser;
             }
         }
         
         
-        // var config = new FlexibleSyncConfiguration(realmApp.CurrentUser)
-        // {
-        //     PopulateInitialSubscriptions = (realm) =>
-        //     {
-        //         var myItems = realm.All<ParametersDataObject>().Where(n => true);
-        //         realm.Subscriptions.Add(myItems);
-        //     }
-        // };
-        // realm = await Realm.GetInstanceAsync(config);
-        
-    var config = new FlexibleSyncConfiguration(realmApp.CurrentUser);
-    realm = await Realm.GetInstanceAsync(config);
-
-    realm.Subscriptions.Update(() =>
+    var config = new FlexibleSyncConfiguration(realmApp.CurrentUser)
     {
-        var parametersDataObjects = realm.All<ParametersDataObject>().Where(n => true);
-        realm.Subscriptions.Add(parametersDataObjects);
-    });
-
-    await realm.Subscriptions.WaitForSynchronizationAsync();
+        PopulateInitialSubscriptions = (realm) =>
+        {
+            var paramItems = realm.All<ParametersDataObject>().Where(n => true);
+            var quitItems = realm.All<QuitDataObject>().Where(n => true);
+            realm.Subscriptions.Add(paramItems);
+            realm.Subscriptions.Add(quitItems);
+        }
+    };
+    realm = await Realm.GetInstanceAsync(config);
+        
+    Debug.Log("REALM CONTROLLER SUBS " + realm.Subscriptions.Count);
 
     }
 
