@@ -58,6 +58,7 @@ public class CaptionLocation : MonoBehaviour
     void HandleNonRegCaptions() {
         Vector3 forwardFromCamera = mainCamera.transform.forward;
         Vector3 newPosition = mainCamera.transform.position + forwardFromCamera * dist;
+        Debug.Log(newPosition);
         transform.position = newPosition;
         transform.rotation = Quaternion.LookRotation(forwardFromCamera);
     }

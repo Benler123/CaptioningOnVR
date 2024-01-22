@@ -9,6 +9,7 @@ public class CaptionBackground : MonoBehaviour
 {
     // Start is called before the first frame update
     private float buffer = .5f;
+    public int test;
     public Transform juror1;
     public Transform juror2;
     public Transform juror3;
@@ -62,7 +63,7 @@ public class CaptionBackground : MonoBehaviour
 
     void HandleNonRegCaptions(float offset) {
         Vector3 forwardFromCamera = mainCamera.transform.forward;
-        Vector3 newPosition = mainCamera.transform.position + forwardFromCamera * dist;;
+        Vector3 newPosition = mainCamera.transform.position + forwardFromCamera * dist;
             // Set the object's position
         transform.position = newPosition;
             
