@@ -13,8 +13,12 @@ public partial class ParametersDataObject : IRealmObject
 
     public long Video { get; set; }
 
-    public long Offset { get; set; }
+    public long OffsetX { get; set; }
+    public long OffsetY { get; set; }
+
     public long CaptioningMethod { get; set; }
+
+    public double alpha{get; set;}
 
     public ParametersDataObject()
     {

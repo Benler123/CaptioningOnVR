@@ -158,6 +158,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Params: {fileID: 11400000, guid: 7ed1892f6db714b1dad30dc2fac27a0f, type: 2}
   update: 1
+  background: {fileID: 0}
 --- !u!114 &233488532
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -529,7 +530,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &420281013
 Transform:
   m_ObjectHideFlags: 0
@@ -539,11 +540,11 @@ Transform:
   m_GameObject: {fileID: 420281012}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.542, y: 0.01, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.3703666, z: 1}
+  m_LocalPosition: {x: 0.542, y: 0.010000069, z: 0}
+  m_LocalScale: {x: 0.20000002, y: 0.37036657, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1468120079}
+  m_Father: {fileID: 2051211371}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &420281014
 BoxCollider:
@@ -976,11 +977,11 @@ Transform:
   m_GameObject: {fileID: 650235778}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.542, y: 0.01, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.3703666, z: 1}
+  m_LocalPosition: {x: -0.458, y: 0.010000069, z: 0}
+  m_LocalScale: {x: 0.20000002, y: 0.37036657, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1866452597}
+  m_Father: {fileID: 1342707644}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &650235780
 MonoBehaviour:
@@ -1203,7 +1204,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &960813998
 Transform:
   m_ObjectHideFlags: 0
@@ -1213,11 +1214,11 @@ Transform:
   m_GameObject: {fileID: 960813997}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.542, y: 0.01, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.37036663, z: 1}
+  m_LocalPosition: {x: -0.542, y: 0.010000069, z: 0}
+  m_LocalScale: {x: 0.20000002, y: 0.3703666, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1468120079}
+  m_Father: {fileID: 2051211371}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &960813999
 BoxCollider:
@@ -1633,6 +1634,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Params: {fileID: 11400000, guid: 7ed1892f6db714b1dad30dc2fac27a0f, type: 2}
   update: 0
+  background: {fileID: 0}
 --- !u!114 &1131097183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1847,7 +1849,9 @@ Transform:
   m_LocalPosition: {x: 1, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1694752209}
+  - {fileID: 650235779}
   m_Father: {fileID: 1866452597}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1342707645
@@ -2143,8 +2147,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2051211371}
-  - {fileID: 420281013}
-  - {fileID: 960813998}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1468120080
@@ -2545,11 +2547,11 @@ Transform:
   m_GameObject: {fileID: 1694752208}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.542, y: 0.01, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.37036663, z: 1}
+  m_LocalPosition: {x: -1.542, y: 0.010000069, z: 0}
+  m_LocalScale: {x: 0.20000002, y: 0.3703666, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1866452597}
+  m_Father: {fileID: 1342707644}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1694752210
 MonoBehaviour:
@@ -2906,8 +2908,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1342707644}
-  - {fileID: 650235779}
-  - {fileID: 1694752209}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1897956817
@@ -3070,6 +3070,7 @@ GameObject:
   - component: {fileID: 2048276029}
   - component: {fileID: 2048276028}
   - component: {fileID: 2048276030}
+  - component: {fileID: 2048276031}
   m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -3209,6 +3210,19 @@ MonoBehaviour:
   overFlowCaptions: {fileID: 624563259}
   jsonBlob: 
   Params: {fileID: 11400000, guid: 7ed1892f6db714b1dad30dc2fac27a0f, type: 2}
+--- !u!114 &2048276031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2048276026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ca5665b6256b4a98a32d7dd4c7f6cb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parameters: {fileID: 11400000, guid: 7ed1892f6db714b1dad30dc2fac27a0f, type: 2}
 --- !u!1 &2051211367
 GameObject:
   m_ObjectHideFlags: 0
@@ -3221,6 +3235,7 @@ GameObject:
   - component: {fileID: 2051211370}
   - component: {fileID: 2051211369}
   - component: {fileID: 2051211368}
+  - component: {fileID: 2051211372}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -3311,9 +3326,24 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 420281013}
+  - {fileID: 960813998}
   m_Father: {fileID: 1468120079}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2051211372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2051211367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7630199859b104d148a85a8cf57e965a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parameters: {fileID: 11400000, guid: 7ed1892f6db714b1dad30dc2fac27a0f, type: 2}
 --- !u!1 &2058668692
 GameObject:
   m_ObjectHideFlags: 0
@@ -3431,6 +3461,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Params: {fileID: 11400000, guid: 7ed1892f6db714b1dad30dc2fac27a0f, type: 2}
   update: 1
+  background: {fileID: 2051211367}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

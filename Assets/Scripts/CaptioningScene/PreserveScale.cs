@@ -27,14 +27,9 @@ public class PreserveScale : MonoBehaviour {
         if (transform.parent != null)
         {
             transform.localScale = new Vector3(
-                originalScale.x / transform.parent.localScale.x,
+                originalScale.x / transform.parent.parent.localScale.x/ transform.parent.localScale.x,
                 originalScale.y,
                 originalScale.z 
-            );
-			transform.position =  new Vector3(
-                transform.parent.position.x + (transform.parent.localScale.x/2 + originalScale.x) * offset,
-                transform.position.y,
-                transform.position.z 
             );
         }
     }

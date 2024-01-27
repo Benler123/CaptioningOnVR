@@ -9,8 +9,11 @@ public class CaptionLocation : MonoBehaviour
     // Start is called before the first frame update
     public Parameters Params;
     public bool update;
+    public GameObject background; 
     Camera mainCamera;
     float dist;
+    private GameObject textBox;
+    
     
     void Start()
     {
@@ -18,49 +21,20 @@ public class CaptionLocation : MonoBehaviour
         mainCamera = Camera.main;
         dist = transform.position.z - .0001f;
         rectTransform.sizeDelta = new Vector2(Params.getWidth(dist), rectTransform.sizeDelta.y);
+        textBox = transform.GetChild(0).gameObject;
     }  
 
     // Update is called once per frame
     void Update(){
         if(update){
-            UpdatePosition();
+            PlaceCaptions();
         }
     }
 
-    void UpdatePosition() {
-        switch (Params.captioningMethod) {
-            case 1:
-                HandleNonRegCaptions();
-                break;
-            case 2:
-                HandleNonRegCaptions();
-                break;
-            case 3:
-                HandleRegCaptions();
-                break;
-            case 4:
-                HandleRegCaptions();
-                break;
-        }
-    }
-
-    void HandleRegCaptions() {
+    void PlaceCaptions() {
+        transform.position = Params.projectOntoSphere(dist, background.transform) + new Vector3(0.01f, 0, 0);
         Vector3 forwardFromCamera = mainCamera.transform.forward;
-        Vector3 pointOnSphere = Params.projectOntoSphere(dist, Params.ReturnCurrentJurorTransform());
-        Vector3 newPosition = pointOnSphere;
-            
-            // Set the object's position
-        transform.position = newPosition;
-            
-        //  make the object look at the camera
         transform.rotation = Quaternion.LookRotation(forwardFromCamera);
-    }
-    void HandleNonRegCaptions() {
-        Vector3 forwardFromCamera = mainCamera.transform.forward;
-        Vector3 newPosition = mainCamera.transform.position + forwardFromCamera * dist;
-        Debug.Log(newPosition);
-        transform.position = newPosition;
-        transform.rotation = Quaternion.LookRotation(forwardFromCamera);
-    }
+      }
 }
 

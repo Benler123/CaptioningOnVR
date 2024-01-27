@@ -11,9 +11,11 @@ public class Parameters : ScriptableObject
     public long fov = 10;
     public long video = 1;
     // Still in progress. Doesn't work yet.
-    public long offset = 0;
+    public long offsetX = 0;
+    public long offsetY = 0;
     // 1: non-reg with arrows, 2: non-reg without arrows, 3: reg with arrows, 4: reg without arrows
     public long captioningMethod = 1;
+    public float alpha = 1.0f;
     
     private Transform juror1;
     private Transform juror2;
@@ -57,7 +59,7 @@ public class Parameters : ScriptableObject
     }
     
     public Vector3 projectOntoSphere(float radius, Transform point){
-        Transform currentJurorTransform =  ReturnCurrentJurorTransform();
+        Transform currentJurorTransform =  point;
         Vector3 p = new Vector3(
             currentJurorTransform.transform.position.x,
             currentJurorTransform.transform.position.y - 1.1899f,

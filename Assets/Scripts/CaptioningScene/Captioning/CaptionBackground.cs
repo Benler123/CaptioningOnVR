@@ -8,7 +8,7 @@ using System;
 public class CaptionBackground : MonoBehaviour
 {
     // Start is called before the first frame update
-    private float buffer = .5f;
+    private float buffer = .0001f;
     public int test;
     public Transform juror1;
     public Transform juror2;
@@ -19,6 +19,8 @@ public class CaptionBackground : MonoBehaviour
 
     private GameObject leftArrow;
     private GameObject rightArrow;
+    private GameObject backgroundRect; 
+    private const float VERTICAL_FOV = 6.86f;
     public Parameters Params;
     Camera mainCamera;
     float dist;
@@ -28,8 +30,10 @@ public class CaptionBackground : MonoBehaviour
         mainCamera = Camera.main;
         dist = transform.position.z;
         transform.localScale = new Vector3(Params.getWidth(dist), transform.localScale.y, transform.localScale.z);
-        leftArrow = transform.GetChild(1).gameObject;
-        rightArrow = transform.GetChild(2).gameObject;
+        backgroundRect = transform.GetChild(0).gameObject;
+        leftArrow = transform.GetChild(0).GetChild(0).gameObject;
+        rightArrow = transform.GetChild(0).GetChild(1).gameObject;
+        buffer = Params.getWidth(dist)/2;
 
 
     }  
@@ -37,19 +41,24 @@ public class CaptionBackground : MonoBehaviour
     // Update is called once per frame
     void Update(){
 
-   
+        
         currentJuror = Params.ReturnCurrentJurorTransform();
-        float offset = 10;
+        float offsetX = 1f / Params.fov * Params.offsetX;
+        float offsetY = 1f / Params.fov * Params.offsetY * (Params.fov / VERTICAL_FOV);
         switch (Params.captioningMethod) {
             case 1:
-                HandleNonRegCaptions(offset);
+                HandleNonRegCaptions(offsetX, offsetY);
                 HandleNonRegArrows();
                 break;
             case 2:
-                HandleNonRegCaptions(offset);
+                HandleNonRegCaptions(offsetX, offsetY);
+                leftArrow.SetActive(false);
+                rightArrow.SetActive(false);
                 break;
             case 3:
                 HandleRegCaptions();
+                leftArrow.SetActive(false);
+                rightArrow.SetActive(false);
                 break;
             case 4:
                 HandleRegCaptions();
@@ -61,14 +70,23 @@ public class CaptionBackground : MonoBehaviour
     }
 
 
-    void HandleNonRegCaptions(float offset) {
+    void HandleNonRegCaptions(float offsetX, float offsetY) {
         Vector3 forwardFromCamera = mainCamera.transform.forward;
         Vector3 newPosition = mainCamera.transform.position + forwardFromCamera * dist;
-            // Set the object's position
+
+        // move the background captions to the right by the offset
+        backgroundRect.transform.localPosition = new Vector3(offsetX, offsetY, 0);
+        
+        // Set the Caption Container position
         transform.position = newPosition;
+
+        backgroundRect.transform.position = new Vector3(backgroundRect.transform.position.x, backgroundRect.transform.position.y,
+         (float)Math.Sqrt((dist * dist - Math.Pow(backgroundRect.transform.position.x, 2) - Math.Pow(backgroundRect.transform.position.y, 2))));
             
-        //  make the object look at the camera
+        //  make the Container look at the camera
         transform.rotation = Quaternion.LookRotation(forwardFromCamera);
+
+        Debug.Log("RECT " + backgroundRect.transform.position);
     }
 
     void HandleRegCaptions() {
@@ -110,13 +128,12 @@ public class CaptionBackground : MonoBehaviour
     void HandleNonRegArrows() {
         leftArrow.SetActive(true);
         rightArrow.SetActive(true);
-
         Vector3 pointOnSphere = Params.projectOntoSphere(dist, currentJuror);
-        if(transform.position.x + buffer > pointOnSphere.x && transform.position.x - buffer < pointOnSphere.x) {
+        if(backgroundRect.transform.position.x + buffer > pointOnSphere.x && backgroundRect.transform.position.x - buffer < pointOnSphere.x) {
             leftArrow.GetComponent<MeshRenderer>().enabled = false;
             rightArrow.GetComponent<MeshRenderer>().enabled = false;
         }
-        else if (transform.position.x -pointOnSphere.x > 0){
+        else if (backgroundRect.transform.position.x -pointOnSphere.x > 0){
             leftArrow.GetComponent<MeshRenderer>().enabled = false;
             rightArrow.GetComponent<MeshRenderer>().enabled = true;
 
