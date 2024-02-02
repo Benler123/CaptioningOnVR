@@ -27,14 +27,35 @@ public class CaptionLocation : MonoBehaviour
     // Update is called once per frame
     void Update(){
         if(update){
-            PlaceCaptions();
+            PlaceCaptions(Params.captioningMethod == 3 || Params.captioningMethod == 4);
         }
     }
 
-    void PlaceCaptions() {
+    void PlaceCaptions(bool rotate) {
         transform.position = Params.projectOntoSphere(dist, background.transform) + new Vector3(0.01f, 0, 0);
-        Vector3 forwardFromCamera = mainCamera.transform.forward;
-        transform.rotation = Quaternion.LookRotation(forwardFromCamera);
+        if (rotate) {
+            Vector3 forwardFromCamera = mainCamera.transform.forward;
+            transform.rotation = Quaternion.LookRotation(forwardFromCamera);
+        }
       }
+
+    void HandleRegCaptions() {
+        Vector3 forwardFromCamera = mainCamera.transform.forward;
+        Vector3 pointOnSphere = Params.projectOntoSphere(dist, Params.ReturnCurrentJurorTransform());
+        Vector3 newPosition = pointOnSphere;
+            
+            // Set the object's position
+        transform.position = newPosition;
+            
+        //  make the object look at the camera
+        transform.rotation = Quaternion.LookRotation(forwardFromCamera);
+    }
+    void HandleNonRegCaptions(float OffsetX, float OffsetY) {
+        Vector3 forwardFromCamera = mainCamera.transform.forward;
+        Vector3 newPosition = mainCamera.transform.position + forwardFromCamera * dist;
+        // textBox.transform.localPosition = new Vector3(OffsetX, OffsetY, 0);
+        transform.position = newPosition;
+        transform.rotation = Quaternion.LookRotation(forwardFromCamera);
+    }
 }
 
