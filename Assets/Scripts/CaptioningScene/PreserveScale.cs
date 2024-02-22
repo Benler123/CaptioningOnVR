@@ -35,5 +35,8 @@ public class PreserveScale : MonoBehaviour {
     }
 	// Update is called once per frame
 	void Update () {
+        Renderer renderer = GetComponent<Renderer>();
+        float width = renderer.bounds.size.x; // This is the width of the object in world units
+        Debug.Log("Width of the object: " + width);
 	}
 }

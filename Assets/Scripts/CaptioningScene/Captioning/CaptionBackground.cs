@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR;
 using System;
+
 public class CaptionBackground : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -43,8 +44,8 @@ public class CaptionBackground : MonoBehaviour
 
         
         currentJuror = Params.ReturnCurrentJurorTransform();
-        float offsetX = 1f / Params.fov * Params.offsetX;
-        float offsetY = 1f / Params.fov * Params.offsetY * (Params.fov / VERTICAL_FOV);
+        float offsetX = Params.offsetX;
+        float offsetY = Params.offsetY;
         switch (Params.captioningMethod) {
             case 1:
                 HandleNonRegCaptions(offsetX, offsetY);
@@ -73,20 +74,16 @@ public class CaptionBackground : MonoBehaviour
     void HandleNonRegCaptions(float offsetX, float offsetY) {
         Vector3 forwardFromCamera = mainCamera.transform.forward;
         Vector3 newPosition = mainCamera.transform.position + forwardFromCamera * dist;
-
-        // move the background captions to the right by the offset
-        backgroundRect.transform.localPosition = new Vector3(offsetX, offsetY, 0);
-        
+        Vector3 rotatedForard = rotateYaw(offsetX);
+        newPosition = mainCamera.transform.position + rotatedForard * dist;
         // Set the Caption Container position
         transform.position = newPosition;
 
-        backgroundRect.transform.position = new Vector3(backgroundRect.transform.position.x, backgroundRect.transform.position.y,
-         (float)Math.Sqrt((dist * dist - Math.Pow(backgroundRect.transform.position.x, 2) - Math.Pow(backgroundRect.transform.position.y, 2))));
+        // backgroundRect.transform.position = new Vector3(backgroundRect.transform.position.x, backgroundRect.transform.position.y,
+        //  (float)Math.Sqrt((dist * dist - Math.Pow(backgroundRect.transform.position.x, 2) - Math.Pow(backgroundRect.transform.position.y, 2))));
             
         //  make the Container look at the camera
         transform.rotation = Quaternion.LookRotation(forwardFromCamera);
-
-        Debug.Log("RECT " + backgroundRect.transform.position);
     }
 
     void HandleRegCaptions() {
@@ -99,7 +96,7 @@ public class CaptionBackground : MonoBehaviour
         transform.position = newPosition;
             
         //  make the object look at the camera
-        transform.rotation = Quaternion.LookRotation(forwardFromCamera);
+        // transform.rotation = Quaternion.LookRotation(forwardFromCamera);
     }
 
     void HandleRegArrows(){
@@ -143,5 +140,27 @@ public class CaptionBackground : MonoBehaviour
         }
     }
 
+    Vector3 rotateYaw(float offsetX){
+        // float yawAngle = 10f;
+
+        // float yawAngleRad = Mathf.Deg2Rad * yawAngle;
+        // Matrix4x4 yawRotation = Matrix4x4.identity;
+        // yawRotation.m00 = Mathf.Cos(yawAngleRad);
+        // yawRotation.m02 = Mathf.Sin(yawAngleRad);
+        // yawRotation.m20 = -Mathf.Sin(yawAngleRad);
+        // yawRotation.m22 = Mathf.Cos(yawAngleRad);
+
+        // Vector3 rotatedForward = yawRotation.MultiplyVector(forwardFromCamera);
+        // Debug.Log("Forward Vector: " + forwardFromCamera);
+        // Debug.Log("Rotated Forward Vector: " + rotatedForward);
+
+        // return rotatedForward;
+        float yawAngle = offsetX;
+        Vector3 directionToCaption = mainCamera.transform.forward;
+        Quaternion rotation = Quaternion.AngleAxis(yawAngle, mainCamera.transform.up);
+        Vector3 rotatedDirection = rotation * directionToCaption;
+
+        return rotatedDirection;
+    }
 
 }
