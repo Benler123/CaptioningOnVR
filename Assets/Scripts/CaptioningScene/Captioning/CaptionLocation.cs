@@ -35,7 +35,8 @@ public class CaptionLocation : MonoBehaviour
         transform.position = Params.projectOntoSphere(dist, background.transform) + new Vector3(0.01f, 0, 0);
         if (rotate) {
             Vector3 forwardFromCamera = mainCamera.transform.forward;
-            transform.rotation = Quaternion.LookRotation(forwardFromCamera);
+            Vector3 rotatedForward = Parameters.rotateYawFromCameraForward(Params.offsetX);
+            transform.rotation = Quaternion.LookRotation(rotatedForward);
         }
       }
 
@@ -53,6 +54,7 @@ public class CaptionLocation : MonoBehaviour
     void HandleNonRegCaptions(float OffsetX, float OffsetY) {
         Vector3 forwardFromCamera = mainCamera.transform.forward;
         Vector3 newPosition = mainCamera.transform.position + forwardFromCamera * dist;
+        
         // textBox.transform.localPosition = new Vector3(OffsetX, OffsetY, 0);
         transform.position = newPosition;
         transform.rotation = Quaternion.LookRotation(forwardFromCamera);

@@ -108,4 +108,14 @@ public class Parameters : ScriptableObject
             (float)x2, (float)y2, (float)z2
         );
     }
+
+    public static Vector3 rotateYawFromCameraForward(float offsetX){
+        float yawAngle = offsetX;
+        Camera mainCamera = Camera.main;
+        Vector3 directionToCaption = mainCamera.transform.forward;
+        Quaternion rotation = Quaternion.AngleAxis(yawAngle, mainCamera.transform.up);
+        Vector3 rotatedDirection = rotation * directionToCaption;
+
+        return rotatedDirection;
+    }
 }

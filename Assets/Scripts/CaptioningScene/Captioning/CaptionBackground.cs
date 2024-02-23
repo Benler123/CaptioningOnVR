@@ -74,8 +74,8 @@ public class CaptionBackground : MonoBehaviour
     void HandleNonRegCaptions(float offsetX, float offsetY) {
         Vector3 forwardFromCamera = mainCamera.transform.forward;
         Vector3 newPosition = mainCamera.transform.position + forwardFromCamera * dist;
-        Vector3 rotatedForard = rotateYaw(offsetX);
-        newPosition = mainCamera.transform.position + rotatedForard * dist;
+        Vector3 rotatedForward = Parameters.rotateYawFromCameraForward(offsetX);
+        newPosition = mainCamera.transform.position + rotatedForward * dist;
         // Set the Caption Container position
         transform.position = newPosition;
 
@@ -83,7 +83,7 @@ public class CaptionBackground : MonoBehaviour
         //  (float)Math.Sqrt((dist * dist - Math.Pow(backgroundRect.transform.position.x, 2) - Math.Pow(backgroundRect.transform.position.y, 2))));
             
         //  make the Container look at the camera
-        transform.rotation = Quaternion.LookRotation(forwardFromCamera);
+        transform.rotation = Quaternion.LookRotation(rotatedForward);
     }
 
     void HandleRegCaptions() {
@@ -138,29 +138,6 @@ public class CaptionBackground : MonoBehaviour
             leftArrow.GetComponent<MeshRenderer>().enabled = true;
             rightArrow.GetComponent<MeshRenderer>().enabled = false;
         }
-    }
-
-    Vector3 rotateYaw(float offsetX){
-        // float yawAngle = 10f;
-
-        // float yawAngleRad = Mathf.Deg2Rad * yawAngle;
-        // Matrix4x4 yawRotation = Matrix4x4.identity;
-        // yawRotation.m00 = Mathf.Cos(yawAngleRad);
-        // yawRotation.m02 = Mathf.Sin(yawAngleRad);
-        // yawRotation.m20 = -Mathf.Sin(yawAngleRad);
-        // yawRotation.m22 = Mathf.Cos(yawAngleRad);
-
-        // Vector3 rotatedForward = yawRotation.MultiplyVector(forwardFromCamera);
-        // Debug.Log("Forward Vector: " + forwardFromCamera);
-        // Debug.Log("Rotated Forward Vector: " + rotatedForward);
-
-        // return rotatedForward;
-        float yawAngle = offsetX;
-        Vector3 directionToCaption = mainCamera.transform.forward;
-        Quaternion rotation = Quaternion.AngleAxis(yawAngle, mainCamera.transform.up);
-        Vector3 rotatedDirection = rotation * directionToCaption;
-
-        return rotatedDirection;
     }
 
 }
