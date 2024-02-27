@@ -23,7 +23,6 @@ public class PreserveScale : MonoBehaviour {
 
 	 void AdjustScale()
     {
-		Debug.Log(originalScale);
         if (transform.parent != null)
         {
             transform.localScale = new Vector3(
@@ -37,6 +36,5 @@ public class PreserveScale : MonoBehaviour {
 	void Update () {
         Renderer renderer = GetComponent<Renderer>();
         float width = renderer.bounds.size.x; // This is the width of the object in world units
-        Debug.Log("Width of the object: " + width);
 	}
 }

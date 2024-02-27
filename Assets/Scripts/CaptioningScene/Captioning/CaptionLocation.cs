@@ -36,7 +36,7 @@ public class CaptionLocation : MonoBehaviour
         if (rotate) {
             Vector3 forwardFromCamera = mainCamera.transform.forward;
             Vector3 rotatedForward = Parameters.rotateYawFromCameraForward(Params.offsetX);
-            transform.rotation = Quaternion.LookRotation(rotatedForward);
+            transform.rotation = Quaternion.LookRotation(forwardFromCamera);
         }
       }
 

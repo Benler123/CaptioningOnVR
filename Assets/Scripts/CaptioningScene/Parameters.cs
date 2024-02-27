@@ -103,7 +103,7 @@ public class Parameters : ScriptableObject
         // Convert back to Cartesian coordinates
         (double x2, double y2, double z2) = Parameters.SphericalToCartesian(rSphere, theta, phiPrime);
 
-        Debug.Log($"New coordinates: ({x2}, {y2}, {z2})");
+        
         return new Vector3(
             (float)x2, (float)y2, (float)z2
         );

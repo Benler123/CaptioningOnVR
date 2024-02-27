@@ -83,7 +83,7 @@ public class CaptionBackground : MonoBehaviour
         //  (float)Math.Sqrt((dist * dist - Math.Pow(backgroundRect.transform.position.x, 2) - Math.Pow(backgroundRect.transform.position.y, 2))));
             
         //  make the Container look at the camera
-        transform.rotation = Quaternion.LookRotation(rotatedForward);
+        transform.rotation = Quaternion.LookRotation(forwardFromCamera);
     }
 
     void HandleRegCaptions() {
