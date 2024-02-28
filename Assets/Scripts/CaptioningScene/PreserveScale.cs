@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using MongoDB.Bson.IO;
 using UnityEngine;
 
 public class PreserveScale : MonoBehaviour {
 
-	Vector3 originalScale;
+	
+    public bool isLeft;
+    Vector3 originalScale;
 
-	public float offset = 0.2f;
 	void Awake() 
 	{
 		originalScale = transform.localScale;
@@ -30,6 +32,22 @@ public class PreserveScale : MonoBehaviour {
                 originalScale.y,
                 originalScale.z 
             );
+            if (isLeft)
+            {
+                transform.localPosition = new Vector3(
+                    -0.5f - transform.localScale.x / 2f,
+                    transform.localPosition.y,
+                    transform.localPosition.z
+                );
+            }
+            else
+            {
+                transform.localPosition = new Vector3(
+                    0.5f + transform.localScale.x / 2f,
+                    transform.localPosition.y,
+                    transform.localPosition.z
+                );
+            }
         }
     }
 	// Update is called once per frame

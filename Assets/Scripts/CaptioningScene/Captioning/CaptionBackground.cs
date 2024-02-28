@@ -32,11 +32,13 @@ public class CaptionBackground : MonoBehaviour
         dist = transform.position.z;
         transform.localScale = new Vector3(Params.getWidth(dist), transform.localScale.y, transform.localScale.z);
         backgroundRect = transform.GetChild(0).gameObject;
-        leftArrow = transform.GetChild(0).GetChild(0).gameObject;
-        rightArrow = transform.GetChild(0).GetChild(1).gameObject;
-        buffer = Params.getWidth(dist)/2;
-
-
+        leftArrow = transform.GetChild(0).GetChild(1).gameObject;
+        rightArrow = transform.GetChild(0).GetChild(0).gameObject;
+        buffer = Params.getWidth(dist)/2;        
+        
+        // if (Params.captioningMethod==1){
+        //     backgroundRect.transform.localScale = new Vector3(1 - leftArrow.transform.localScale.x * 2, backgroundRect.transform.localScale.y, backgroundRect.transform.localEulerAngles.z);
+        // }
     }  
 
     // Update is called once per frame
@@ -66,8 +68,7 @@ public class CaptionBackground : MonoBehaviour
                 HandleRegArrows(); 
                 break;
         }
-
-
+        
     }
 
 
@@ -115,11 +116,11 @@ public class CaptionBackground : MonoBehaviour
             rightArrow.GetComponent<MeshRenderer>().enabled = false;
         }
         else if (newPosition.x - pointOnSphere.x > 0){
-            leftArrow.GetComponent<MeshRenderer>().enabled = false;
-            rightArrow.GetComponent<MeshRenderer>().enabled = true;
-        } else{
             leftArrow.GetComponent<MeshRenderer>().enabled = true;
             rightArrow.GetComponent<MeshRenderer>().enabled = false;
+        } else{
+            leftArrow.GetComponent<MeshRenderer>().enabled = false;
+            rightArrow.GetComponent<MeshRenderer>().enabled = true;
         }
     }
     void HandleNonRegArrows() {
@@ -131,12 +132,12 @@ public class CaptionBackground : MonoBehaviour
             rightArrow.GetComponent<MeshRenderer>().enabled = false;
         }
         else if (backgroundRect.transform.position.x -pointOnSphere.x > 0){
-            leftArrow.GetComponent<MeshRenderer>().enabled = false;
-            rightArrow.GetComponent<MeshRenderer>().enabled = true;
-
-        } else{
             leftArrow.GetComponent<MeshRenderer>().enabled = true;
             rightArrow.GetComponent<MeshRenderer>().enabled = false;
+
+        } else{
+            leftArrow.GetComponent<MeshRenderer>().enabled = false;
+            rightArrow.GetComponent<MeshRenderer>().enabled = true;
         }
     }
 
