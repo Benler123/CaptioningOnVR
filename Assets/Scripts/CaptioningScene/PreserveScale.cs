@@ -6,7 +6,6 @@ using UnityEngine;
 public class PreserveScale : MonoBehaviour {
 
 	
-    public bool isLeft;
     Vector3 originalScale;
 
 	void Awake() 
@@ -32,22 +31,7 @@ public class PreserveScale : MonoBehaviour {
                 originalScale.y,
                 originalScale.z 
             );
-            if (isLeft)
-            {
-                transform.localPosition = new Vector3(
-                    -0.5f - transform.localScale.x / 2f,
-                    transform.localPosition.y,
-                    transform.localPosition.z
-                );
-            }
-            else
-            {
-                transform.localPosition = new Vector3(
-                    0.5f + transform.localScale.x / 2f,
-                    transform.localPosition.y,
-                    transform.localPosition.z
-                );
-            }
+        
         }
     }
 	// Update is called once per frame
