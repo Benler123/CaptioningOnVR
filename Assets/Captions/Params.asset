@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3c488f15293048a3b836a88979228ec, type: 3}
   m_Name: Params
   m_EditorClassIdentifier: 
-  fov: 20
+  fov: 10
   video: 1
-  offsetX: 15
+  offsetX: 10
   offsetY: 0
   captioningMethod: 1
-  alpha: 1
+  alpha: 0.5
