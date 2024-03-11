@@ -27,7 +27,8 @@ public class CaptionLocation : MonoBehaviour
     // Update is called once per frame
     void Update(){
         if(update){
-            PlaceCaptions(Params.captioningMethod != 3 && Params.captioningMethod != 4);
+            // PlaceCaptions(Params.captioningMethod != 3 && Params.captioningMethod != 4);
+            PlaceCaptions(true);
         }
     }
 
