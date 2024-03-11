@@ -38,9 +38,6 @@ public class CaptionBackground : MonoBehaviour
         leftArrow = transform.GetChild(0).GetChild(1).gameObject;
         rightArrow = transform.GetChild(0).GetChild(0).gameObject;
         buffer = Params.getWidth(dist)/2;        
-        // setArrows("left", false);
-        // setArrows("right", false);
-        Debug.Log("FINSIHED START");
     }  
 
     // Update is called once per frame
@@ -86,7 +83,7 @@ public class CaptionBackground : MonoBehaviour
         //  (float)Math.Sqrt((dist * dist - Math.Pow(backgroundRect.transform.position.x, 2) - Math.Pow(backgroundRect.transform.position.y, 2))));
             
         //  make the Container look at the camera
-        transform.rotation = Quaternion.LookRotation(rotatedForward);
+        transform.rotation = Quaternion.LookRotation(forwardFromCamera);
     }
 
     void HandleRegCaptions() {

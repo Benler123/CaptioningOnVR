@@ -27,8 +27,7 @@ public class CaptionLocation : MonoBehaviour
     // Update is called once per frame
     void Update(){
         if(update){
-            // PlaceCaptions(Params.captioningMethod != 3 && Params.captioningMethod != 4);
-            PlaceCaptions(true);
+            PlaceCaptions(Params.captioningMethod != 3 && Params.captioningMethod != 4);
         }
     }
 
@@ -37,7 +36,10 @@ public class CaptionLocation : MonoBehaviour
         if (rotate) {
             Vector3 forwardFromCamera = mainCamera.transform.forward;
             Vector3 rotatedForward = Parameters.rotateYawFromCameraForward(Params.offsetX);
-            transform.rotation = Quaternion.LookRotation(rotatedForward);
+            transform.rotation = Quaternion.LookRotation(forwardFromCamera);
+        } else {
+            Vector3 forwardFromCamera = mainCamera.transform.forward;
+            transform.rotation = Quaternion.LookRotation(forwardFromCamera);
         }
       }
 
