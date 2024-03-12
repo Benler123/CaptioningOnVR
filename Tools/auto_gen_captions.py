@@ -16,10 +16,9 @@
 import whisper_timestamped as whisper
 import json
 import pathlib
+import sys
 
-def main():
-    video_name = "main.1.mp4"
-
+def main(video_name: str) -> None:
     video_path = str(pathlib.Path(__file__).parent.parent.absolute()) + "/Assets/StreamingAssets/Videos/" + video_name
     audio = whisper.load_audio(video_path)
 
@@ -28,10 +27,9 @@ def main():
 
     json_name = video_name + ".json"
     json_path = str(pathlib.Path(__file__).parent.absolute()) + "/" + json_name
-    print(json_name)
-    print(json_path)
     with open(json_path, "w+") as f:
         json.dump(result, f)
 
 if __name__ == "__main__":
-    main()
+    video_name = sys.argv[1]
+    main(video_name)
