@@ -1,17 +1,10 @@
-# SRT (sentence level) generation
-# https://cloud.google.com/speech-to-text#translate-audio-into-text
-# https://github.com/alphacep/vosk-api/tree/master
+#!/usr/bin/env python
+"""
+This script generates captions for the given video and outputs them
+to a JSON file in the same directory as the script.
 
-# Word level generation
-# https://cloud.google.com/speech-to-text/docs/async-time-offsets
-# https://github.com/linto-ai/whisper-timestamped
-
-# whisper-timestamped is a fork of OpenAI's whisper general purpuse speech recognition model
-# https://github.com/openai/whisper
-# https://github.com/ggerganov/whisper.cpp
-
-# here is a package that wraps all of whisper and whisper-timestamped, might be easier to use
-# https://github.com/openai/whisper/discussions/1093
+Usage: auto_gen_captions.py PATH
+"""
 
 import whisper_timestamped as whisper
 import json
@@ -21,9 +14,11 @@ import os
 
 def auto_gen_captions(video_path: str) -> dict:
     """
-    Generate captions for the video
+    Generate captions for the video.
     Args:
-    video_path: absolute path to the video 
+        video_path: absolute path to the video.
+    Return:
+        str: absolute path to the JSON file.
     """
     # Load video
     audio = whisper.load_audio(video_path)
@@ -43,7 +38,7 @@ def auto_gen_captions(video_path: str) -> dict:
     with open(json_path, "w+") as f:
         json.dump(result, f)
 
-    return result
+    return json_path
 
 if __name__ == "__main__":
     video_path = sys.argv[1]
