@@ -12,7 +12,7 @@ import pathlib
 import sys
 import os
 
-def auto_gen_captions(video_path: str) -> dict:
+def auto_gen_captions(video_path: str) -> str:
     """
     Generate captions for the video.
     Args:
@@ -33,7 +33,7 @@ def auto_gen_captions(video_path: str) -> dict:
 
     # Save captions to JSON file
     video_name = os.path.basename(video_path)
-    json_name = video_name + ".json"
+    json_name = video_name + ".auto.json"
     json_path = str(pathlib.Path(__file__).parent.absolute()) + "/" + json_name
     with open(json_path, "w+") as f:
         json.dump(result, f)
