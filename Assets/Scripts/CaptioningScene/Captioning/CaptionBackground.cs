@@ -43,7 +43,8 @@ public class CaptionBackground : MonoBehaviour
     // Update is called once per frame
     void Update(){
 
-        
+        setArrows("left", false);
+        setArrows("right", false);
         currentJuror = Params.ReturnCurrentJurorTransform();
         float offsetX = Params.offsetX;
         float offsetY = Params.offsetY;
