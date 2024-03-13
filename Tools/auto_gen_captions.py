@@ -17,19 +17,22 @@ import whisper_timestamped as whisper
 import json
 import pathlib
 import sys
+import os
 
-def main(video_name: str) -> None:
-    video_path = str(pathlib.Path(__file__).parent.parent.absolute()) + "/Assets/StreamingAssets/Videos/" + video_name
+def auto_gen_captions(video_path: str) -> None:
     audio = whisper.load_audio(video_path)
 
-    model = whisper.load_model("tiny", device="cpu")
+    model_name = "tiny"
+    # model_name = "NbAiLab/whisper-large-v2-nob"
+    model = whisper.load_model(model_name, device="cpu")
     result = whisper.transcribe(model, audio, language="en")
 
+    video_name = os.path.basename(video_path)
     json_name = video_name + ".json"
     json_path = str(pathlib.Path(__file__).parent.absolute()) + "/" + json_name
     with open(json_path, "w+") as f:
         json.dump(result, f)
 
 if __name__ == "__main__":
-    video_name = sys.argv[1]
-    main(video_name)
+    video_path = sys.argv[1]
+    auto_gen_captions(video_path)
