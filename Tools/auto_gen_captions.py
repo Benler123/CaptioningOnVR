@@ -19,19 +19,31 @@ import pathlib
 import sys
 import os
 
-def auto_gen_captions(video_path: str) -> None:
+def auto_gen_captions(video_path: str) -> dict:
+    """
+    Generate captions for the video
+    Args:
+    video_path: absolute path to the video 
+    """
+    # Load video
     audio = whisper.load_audio(video_path)
 
+    # Load model
     model_name = "tiny"
     # model_name = "NbAiLab/whisper-large-v2-nob"
     model = whisper.load_model(model_name, device="cpu")
+
+    # Generate captions
     result = whisper.transcribe(model, audio, language="en")
 
+    # Save captions to JSON file
     video_name = os.path.basename(video_path)
     json_name = video_name + ".json"
     json_path = str(pathlib.Path(__file__).parent.absolute()) + "/" + json_name
     with open(json_path, "w+") as f:
         json.dump(result, f)
+
+    return result
 
 if __name__ == "__main__":
     video_path = sys.argv[1]
