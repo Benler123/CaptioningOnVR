@@ -8,6 +8,9 @@ using System;
 
 public class CaptionBackground : MonoBehaviour
 {
+    
+    int[] LEFT_ARROW_CHILDREN = {1,4,5,7,9};
+    int[] RIGHT_ARROW_CHILDREN = {0,2,3,6,8};
     // Start is called before the first frame update
     private float buffer = .0001f;
     public int test;
@@ -35,16 +38,13 @@ public class CaptionBackground : MonoBehaviour
         leftArrow = transform.GetChild(0).GetChild(1).gameObject;
         rightArrow = transform.GetChild(0).GetChild(0).gameObject;
         buffer = Params.getWidth(dist)/2;        
-        
-        // if (Params.captioningMethod==1){
-        //     backgroundRect.transform.localScale = new Vector3(1 - leftArrow.transform.localScale.x * 2, backgroundRect.transform.localScale.y, backgroundRect.transform.localEulerAngles.z);
-        // }
     }  
 
     // Update is called once per frame
     void Update(){
 
-        
+        setArrows("left", false);
+        setArrows("right", false);
         currentJuror = Params.ReturnCurrentJurorTransform();
         float offsetX = Params.offsetX;
         float offsetY = Params.offsetY;
@@ -84,7 +84,7 @@ public class CaptionBackground : MonoBehaviour
         //  (float)Math.Sqrt((dist * dist - Math.Pow(backgroundRect.transform.position.x, 2) - Math.Pow(backgroundRect.transform.position.y, 2))));
             
         //  make the Container look at the camera
-        transform.rotation = Quaternion.LookRotation(rotatedForward);
+        transform.rotation = Quaternion.LookRotation(forwardFromCamera);
     }
 
     void HandleRegCaptions() {
@@ -97,7 +97,7 @@ public class CaptionBackground : MonoBehaviour
         transform.position = newPosition;
             
         //  make the object look at the camera
-        // transform.rotation = Quaternion.LookRotation(forwardFromCamera);
+        transform.rotation = Quaternion.LookRotation(forwardFromCamera);
     }
 
     void HandleRegArrows(){
@@ -122,22 +122,51 @@ public class CaptionBackground : MonoBehaviour
             leftArrow.GetComponent<MeshRenderer>().enabled = false;
             rightArrow.GetComponent<MeshRenderer>().enabled = true;
         }
+
+        leftArrow.transform.rotation = Quaternion.LookRotation(forwardFromCamera);
+        rightArrow.transform.rotation = Quaternion.LookRotation(forwardFromCamera);
     }
     void HandleNonRegArrows() {
         leftArrow.SetActive(true);
         rightArrow.SetActive(true);
-        Vector3 pointOnSphere = Params.projectOntoSphere(dist, currentJuror);
-        if(backgroundRect.transform.position.x + buffer > pointOnSphere.x && backgroundRect.transform.position.x - buffer < pointOnSphere.x) {
-            leftArrow.GetComponent<MeshRenderer>().enabled = false;
-            rightArrow.GetComponent<MeshRenderer>().enabled = false;
-        }
-        else if (backgroundRect.transform.position.x -pointOnSphere.x > 0){
-            leftArrow.GetComponent<MeshRenderer>().enabled = true;
-            rightArrow.GetComponent<MeshRenderer>().enabled = false;
+        Vector3 forwardFromCamera = mainCamera.transform.forward;
 
+        Vector3 newPosition = mainCamera.transform.position + forwardFromCamera * dist;
+        Vector3 pointOnSphere = Params.projectOntoSphere(dist, currentJuror);
+        // if(backgroundRect.transform.position.x + buffer > pointOnSphere.x && backgroundRect.transform.position.x - buffer < pointOnSphere.x) {
+        //     setArrows("left", false);
+        //     setArrows("right", false);
+        // }
+        // else if (backgroundRect.transform.position.x -pointOnSphere.x > 0){
+        //     setArrows("left", true);
+        //     setArrows("right", false);
+
+        // } else{
+        //     setArrows("right", true);
+        //     setArrows("left", false);
+        // }
+        if(newPosition.x + buffer > pointOnSphere.x && newPosition.x - buffer < pointOnSphere.x) {
+            setArrows("left", false);
+            setArrows("right", false);
+        }
+        else if (newPosition.x - pointOnSphere.x > 0){
+            setArrows("left", true);
+            setArrows("right", false);
         } else{
-            leftArrow.GetComponent<MeshRenderer>().enabled = false;
-            rightArrow.GetComponent<MeshRenderer>().enabled = true;
+            setArrows("right", true);
+            setArrows("left", false);
+        }
+    }
+
+    void setArrows(String side, bool active) {
+        if (side == "left") {
+            foreach (int i in LEFT_ARROW_CHILDREN) {
+                transform.GetChild(0).GetChild(i).gameObject.GetComponent<MeshRenderer>().enabled = active;
+            }
+        } else {
+            foreach (int i in RIGHT_ARROW_CHILDREN) {
+                transform.GetChild(0).GetChild(i).gameObject.GetComponent<MeshRenderer>().enabled = active;
+            }
         }
     }
 

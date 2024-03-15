@@ -9,12 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3c488f15293048a3b836a88979228ec, type: 3}
-  m_Name: Params
+  m_Script: {fileID: 11500000, guid: 975057b4fdcfb8142b3080d19a5cc712, type: 3}
+  m_Name: OpenXR Editor Settings
   m_EditorClassIdentifier: 
-  fov: 20
-  video: 1
-  offsetX: 27
-  offsetY: 0
-  captioningMethod: 1
-  alpha: 1
+  Keys: 07000000
+  Values:
+  - featureSets:
+    - com.unity.openxr.featureset.meta

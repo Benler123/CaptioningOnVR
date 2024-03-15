@@ -9,12 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3c488f15293048a3b836a88979228ec, type: 3}
-  m_Name: Params
+  m_Script: {fileID: 11500000, guid: b2f528b98f844ed8b6b2d5fdf90b40e6, type: 3}
+  m_Name: XRSimulationPreferences
   m_EditorClassIdentifier: 
-  fov: 20
-  video: 1
-  offsetX: 27
-  offsetY: 0
-  captioningMethod: 1
-  alpha: 1
+  m_EnvironmentPrefab: {fileID: 0}
+  m_FallbackEnvironmentPrefab: {fileID: 7576867131100388943, guid: c7b92c392902f4043a03a64032c02fe1,
+    type: 3}
+  m_EnableNavigation: 1
