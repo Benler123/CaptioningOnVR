@@ -3,14 +3,16 @@
 This script modifies the delay values for the captions JSON file
 given at PATH2 by retiming them by analyzing the video at PATH1.
 
-Usage: format_captions.py PATH1 PATH2
+Usage: python format_captions.py PATH1 PATH2
 """
 
-import json
+# https://github.com/jianfch/stable-ts
+import stable_whisper
+import pathlib
 import sys
 import os
-import pathlib
-from auto_gen_captions import auto_gen_captions
+import json
+import string
 
 def format_captions(video_path: str, caption_path: str) -> str:
     """
@@ -21,43 +23,55 @@ def format_captions(video_path: str, caption_path: str) -> str:
     Return:
         str: absolute path to the JSON file.
     """
-    auto_captions = []
-    manual_captions = []
-    captions = None
+    original_captions = None
 
-    # Get auto generated captions
-    video_json_path = auto_gen_captions(video_path)
-    with open(video_json_path, "r") as f:
-        video_data = json.load(f)
-        segments = video_data["segments"]
-        for segment in segments:
-            words = segment["words"]
-            for word in words:
-                text, start, end = word["text"], float(word["start"]), float(word["end"])
-                auto_captions.append((text, start, end))
+    # Load original captions
+    captions_str = ""
+    with open(caption_path, "r") as original_file:
+        original_captions = json.load(original_file)
+        for word in original_captions:
+            text = word["text"]
+            captions_str += " " + text
 
-    # Get manual captions
-    with open(caption_path, "r") as f:
-        words = json.load(f)
-        captions = words
-        for word in words:
-            text, delay = word["text"], float(word["delay"])
-            manual_captions.append((text, delay))
+    # Load model
+    model = stable_whisper.load_model("base")
 
-    # Resolve time stamps between auto and manual captions
-    i = 0
-    j = 0
-    while i < len(auto_captions) and j < len(manual_captions):
-        auto_word, auto_start, auto_end = auto_captions[i]
-        manual_word, manual_delay = manual_captions[j]
-        # TODO
+    # Generate timestamps
+    result = model.align(video_path, captions_str, language="en", )
 
     # Save captions to JSON file
     video_name = os.path.basename(video_path)
     json_name = video_name + ".manual.json"
     json_path = str(pathlib.Path(__file__).parent.absolute()) + "/" + json_name
-    with open(json_path, "w+") as f:
-        json.dump(captions, f)
+    result.save_as_json(json_path)
+
+    # Format output
+    i = 0
+    with open(json_path, "r") as new_file:
+        file = json.load(new_file)
+        segments = file["segments"]
+        for segment in segments:
+            words = segment["words"]
+            for word in words:
+
+                # Do not get time for punctuation
+                # Results also splits up words such as "boy-oh-boy" into ("boy", "-oh", "-boy"). Only consider first instance
+                gen_text = word["word"]
+                if gen_text in string.punctuation or gen_text[0] == "-":
+                    continue
+
+                # Get start time in seconds
+                start = float(word["start"])
+                # Conver to milliseconds
+                start = start * 1000
+
+                # Replace delay in original captions
+                original_captions[i]["delay"] = start
+                i += 1
+
+    # Resave output
+    with open(json_path, "w+") as format_new_file:
+        json.dump(original_captions, format_new_file)
 
     return json_path
 
