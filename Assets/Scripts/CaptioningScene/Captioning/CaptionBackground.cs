@@ -129,15 +129,29 @@ public class CaptionBackground : MonoBehaviour
     void HandleNonRegArrows() {
         leftArrow.SetActive(true);
         rightArrow.SetActive(true);
+        Vector3 forwardFromCamera = mainCamera.transform.forward;
+
+        Vector3 newPosition = mainCamera.transform.position + forwardFromCamera * dist;
         Vector3 pointOnSphere = Params.projectOntoSphere(dist, currentJuror);
-        if(backgroundRect.transform.position.x + buffer > pointOnSphere.x && backgroundRect.transform.position.x - buffer < pointOnSphere.x) {
+        // if(backgroundRect.transform.position.x + buffer > pointOnSphere.x && backgroundRect.transform.position.x - buffer < pointOnSphere.x) {
+        //     setArrows("left", false);
+        //     setArrows("right", false);
+        // }
+        // else if (backgroundRect.transform.position.x -pointOnSphere.x > 0){
+        //     setArrows("left", true);
+        //     setArrows("right", false);
+
+        // } else{
+        //     setArrows("right", true);
+        //     setArrows("left", false);
+        // }
+        if(newPosition.x + buffer > pointOnSphere.x && newPosition.x - buffer < pointOnSphere.x) {
             setArrows("left", false);
             setArrows("right", false);
         }
-        else if (backgroundRect.transform.position.x -pointOnSphere.x > 0){
+        else if (newPosition.x - pointOnSphere.x > 0){
             setArrows("left", true);
             setArrows("right", false);
-
         } else{
             setArrows("right", true);
             setArrows("left", false);
