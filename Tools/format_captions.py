@@ -33,6 +33,10 @@ def format_captions(video_path: str, caption_path: str) -> str:
             text = word["text"]
             captions_str += " " + text
 
+    # Filter original captions
+    captions_str = captions_str.replace("a.m.", "am")
+    captions_str = captions_str.replace("p.m.", "pm")
+
     # Load model
     model = stable_whisper.load_model("base")
 
@@ -55,9 +59,10 @@ def format_captions(video_path: str, caption_path: str) -> str:
             for word in words:
 
                 # Do not get time for punctuation
-                # Results also splits up words such as "boy-oh-boy" into ("boy", "-oh", "-boy"). Only consider first instance
+                # Results splits up hypens: "boy-oh-boy" -> ("boy", "-oh", "-boy"). Only consider first instance
+                # Results splits up time: 12:10 -> (12, :10). Only consider first instance
                 gen_text = word["word"]
-                if gen_text in string.punctuation or gen_text[0] == "-":
+                if gen_text in string.punctuation or gen_text[0] == "-" or gen_text[0] == ":":
                     continue
 
                 # Get start time in seconds
