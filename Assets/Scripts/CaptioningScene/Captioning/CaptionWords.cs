@@ -18,7 +18,7 @@ public class CaptionWords : MonoBehaviour
 
     double timer = 0;
 
-    double delay = 0;
+    double delay = 0.0;
 
     // Start is called before the first frame update
     void Start()
@@ -30,7 +30,8 @@ public class CaptionWords : MonoBehaviour
         string jsonResourcePath = string.Format("CaptionJsons/Merged_captions.{0}", Params.video);
         TextAsset jsonTextFile = Resources.Load<TextAsset>(jsonResourcePath);
         deserialized_words = JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(jsonTextFile.text);
-            if (textMeshProText == null) {
+        delay = deserialized_words[0]["delay"] == null ? 0.0 : double.Parse(deserialized_words[0]["delay"], System.Globalization.CultureInfo.InvariantCulture) / 1000;
+        if (textMeshProText == null) {
             Debug.LogError("TextMeshProUGUI component is null.");
         }
         if (overflowTextMeshProText == null) {
@@ -45,7 +46,8 @@ public class CaptionWords : MonoBehaviour
     timer += Time.deltaTime;
         if (timer >= delay && curr_word < deserialized_words.Count) {
             Dictionary<string, string> currChunk = deserialized_words[curr_word];
-            delay =  double.Parse(currChunk["delay"], System.Globalization.CultureInfo.InvariantCulture) / 1000;
+            Dictionary<string,string> nextChunk = curr_word + 1 == deserialized_words.Count? deserialized_words[curr_word] : deserialized_words[curr_word + 1];
+            delay =  double.Parse(nextChunk["delay"], System.Globalization.CultureInfo.InvariantCulture) / 1000;
             Params.setCurrentJuror(currChunk["speaker_id"]);
             if(addWordtoOverflow(currChunk)) {
                 clearAndSet(textMeshProText, currChunk);

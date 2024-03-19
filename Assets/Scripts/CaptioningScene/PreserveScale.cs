@@ -10,18 +10,15 @@ public class PreserveScale : MonoBehaviour {
 
 	void Awake() 
 	{
-            Debug.Log("IN AWAKE");
 
 		originalScale = transform.localScale;
 	}
    IEnumerator Start()
     {
         // Wait until the next frame
-        Debug.Log("HERE1");
         yield return null;
 
         // Now the parent's Start method should have been called
-        Debug.Log("HERE");
 
         AdjustScale();
     }
