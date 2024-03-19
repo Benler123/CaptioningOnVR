@@ -27,7 +27,6 @@ public class PreserveScale : MonoBehaviour {
     {
         if (transform.parent != null)
         {
-            Debug.Log("Parent scale: " + transform.parent.localScale);
             transform.localScale = new Vector3(
                 originalScale.x / transform.parent.parent.localScale.x/ transform.parent.localScale.x,
                 originalScale.y,
