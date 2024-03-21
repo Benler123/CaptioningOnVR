@@ -10,18 +10,15 @@ public class PreserveScale : MonoBehaviour {
 
 	void Awake() 
 	{
-            Debug.Log("IN AWAKE");
 
 		originalScale = transform.localScale;
 	}
    IEnumerator Start()
     {
         // Wait until the next frame
-        Debug.Log("HERE1");
         yield return null;
 
         // Now the parent's Start method should have been called
-        Debug.Log("HERE");
 
         AdjustScale();
     }
@@ -30,7 +27,6 @@ public class PreserveScale : MonoBehaviour {
     {
         if (transform.parent != null)
         {
-            Debug.Log("Parent scale: " + transform.parent.localScale);
             transform.localScale = new Vector3(
                 originalScale.x / transform.parent.parent.localScale.x/ transform.parent.localScale.x,
                 originalScale.y,
