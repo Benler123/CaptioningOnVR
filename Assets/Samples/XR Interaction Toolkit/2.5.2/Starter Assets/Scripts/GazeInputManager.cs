@@ -91,5 +91,31 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
                 gameObject.SetActive(true);
             }
         }
+
+        /* IsGazing is a method that returns a boolean to check if the user is currently gazing at a particular
+        * game object, like the captions.
+        */
+        public bool IsGazing(GameObject target) {
+
+            if (!m_EyeTrackingDeviceFound) return false;
+
+            var eyeGazeDevice = InputSystem.InputSystem.devices.Find(d => d.layout == k_EyeGazeLayoutName);
+            if (eyeGazeDevice == null) return false;
+
+            var eyeGazeControl = eyeGazeDevice.TryGetChildControl<Vector3Control>("gazePoint");
+            if (eyeGazeControl == null) return false;
+
+            var gazePoint = eyeGazeControl.ReadValue();
+            var direction = (gazePoint - Camera.main.transform.position).normalized;
+
+            RaycastHit hit;
+
+            if (Physics.Raycast(Camera.main.transform.position, direction, out hit)) {
+                return hit.collider.gameObject == target;
+            }
+
+            return false;
+
+        }
     }
 }

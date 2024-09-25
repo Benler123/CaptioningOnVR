@@ -22,6 +22,9 @@ public class UpdateCaptions : MonoBehaviour
 
     double delay = 0;
 
+    //(Revanth) purpose of instantiation: to access the gazeTime from captionLocation and log it
+    private CaptionLocation captionLocation;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +35,9 @@ public class UpdateCaptions : MonoBehaviour
         jsonBlob = File.ReadAllText(string.Format("Assets/Resources/CaptionJsons/merged_captions.{0}.json", Params.video));
         deserialized_words = JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(jsonBlob);
         // Debug.Log(deserialized_words[0]);
+
+        // (Revanth) initializing captionLocation variable here with the first instance of CaptionLocation found in the scene.
+        captionLocation = FindObjectOfType<CaptionLocation>();
 
    }
     // Update is called once per frame
@@ -47,6 +53,11 @@ public class UpdateCaptions : MonoBehaviour
             } else {
                 addWord(currChunk);
             }
+        }
+
+        //(Revanth) logging in the gazeTime, which is the eyetracked time that the user has looked at the 'gameObject' or 'caption'.
+        if (captionLocation != null) {
+            Debug.Log("Gaze Time: " + captionLocation.GetGazeTime());
         }
     }
 

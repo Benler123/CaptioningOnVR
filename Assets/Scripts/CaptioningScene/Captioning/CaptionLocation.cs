@@ -13,8 +13,12 @@ public class CaptionLocation : MonoBehaviour
     Camera mainCamera;
     float dist;
     private GameObject textBox;
+
+    // (revanth) adding a gazetime variable to keep track of the time spent looking at the captions
+    private GazeInputManager gazeInputManager;
+    private float gazeTime;
     
-    
+    //changes to start: initializing gazeTime to 0 upon start, and gazeInputManager.
     void Start()
     {
         RectTransform rectTransform = GetComponent<RectTransform>();
@@ -22,13 +26,25 @@ public class CaptionLocation : MonoBehaviour
         dist = transform.position.z - .0001f;
         rectTransform.sizeDelta = new Vector2(Params.getWidth(dist), rectTransform.sizeDelta.y);
         textBox = transform.GetChild(0).gameObject;
+        gazeInputManager = FindObjectOfType<GazeInputManager>();
+        gazeTime = 0f;
     }  
 
     // Update is called once per frame
+    // (Revanth) Writing the condition for gazeTime and updating gazeTime when user looks at the 'gameObject'
     void Update(){
         if(update){
             PlaceCaptions(Params.captioningMethod != 3 && Params.captioningMethod != 4);
         }
+        
+        if (gazeInputManager != null && gazeInputManager.IsGazing(gameObject)) {
+            gazeTime += Time.deltaTime;
+        }
+    }
+
+    //method to return what the gazeTime was
+    public float GetGazeTime() {
+        return gazeTime;
     }
 
     void PlaceCaptions(bool rotate) {
@@ -62,5 +78,7 @@ public class CaptionLocation : MonoBehaviour
         transform.position = newPosition;
         transform.rotation = Quaternion.LookRotation(forwardFromCamera);
     }
+
+
 }
 
